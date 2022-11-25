@@ -1,12 +1,8 @@
-import 'dart:async';
-
-import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../models/get_questionnaire_model.dart';
 
 class SingleChoiceViewModel extends BaseViewModel {
-
   onRadioBtn(String? value, GetQuestionnaire questionnaire) {
     // v = value!;
     questionnaire.selectedOption![0] = value!;

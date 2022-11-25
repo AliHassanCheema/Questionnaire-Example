@@ -5,8 +5,7 @@ import 'package:stacked/stacked.dart';
 
 import '../../../models/get_questionnaire_model.dart';
 
-class MultiLineViewModel extends BaseViewModel
-{
+class MultiLineViewModel extends BaseViewModel {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   FocusNode focus = FocusNode();
   Answers? answer;
@@ -15,33 +14,26 @@ class MultiLineViewModel extends BaseViewModel
   late StreamController<String> controller;
   late StreamSubscription subscription;
 
-
-  MultiLineViewModel(this.questionnaire, this.controller)
-  {
+  MultiLineViewModel(this.questionnaire, this.controller) {
     // focus.addListener(onFocusChanged);
     subscription = controller.stream.listen((String data) {
-      if(answer == null){
-        if(!formKey.currentState!.validate())
-        {
+      if (answer == null) {
+        if (!formKey.currentState!.validate()) {
           debugPrint('Error');
           return;
         }
       }
-
-      
     });
   }
 
-  void onFocusChanged()
-  {
+  void onFocusChanged() {
     debugPrint('Focus: ${focus.hasFocus.toString()}');
-    if(!focus.hasFocus){
+    if (!focus.hasFocus) {
       onSaved();
     }
   }
 
-  String? onValidate(value)
-  {
+  String? onValidate(value) {
     if (value == null || value.isEmpty) {
       return 'please enter some answer';
     }
@@ -49,10 +41,8 @@ class MultiLineViewModel extends BaseViewModel
     return null;
   }
 
-  void onSaved()
-  {
-    if(!formKey.currentState!.validate())
-    {
+  void onSaved() {
+    if (!formKey.currentState!.validate()) {
       debugPrint('Error');
       return;
     }
@@ -60,9 +50,9 @@ class MultiLineViewModel extends BaseViewModel
     // answer = Answers(questionId: questionnaire.questionId, question: questionnaire.question, answerType: questionnaire.answerType, answer: myAnswer, options: null, selectedOption: null);
   }
 
-
   @override
   void dispose() {
+    super.dispose();
     subscription.cancel();
     focus.removeListener(onFocusChanged);
     focus.dispose();

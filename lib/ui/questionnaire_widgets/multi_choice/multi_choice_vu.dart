@@ -5,8 +5,8 @@ import '../../../models/get_questionnaire_model.dart';
 import 'multi_choice_vm.dart';
 
 class MultiChoiceVU extends ViewModelBuilderWidget<MultiChoiceViewModel> {
-   MultiChoiceVU( this.questionnaire,  {Key? key}) : super(key: key);
-  GetQuestionnaire questionnaire;
+  const MultiChoiceVU( this.questionnaire,  {Key? key}) : super(key: key);
+  final GetQuestionnaire questionnaire;
 
   @override
   Widget builder(BuildContext context, MultiChoiceViewModel viewModel, Widget? child) {

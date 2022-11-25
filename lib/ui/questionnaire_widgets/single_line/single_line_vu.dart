@@ -6,30 +6,35 @@ import 'package:questionnaire/ui/questionnaire_widgets/single_line/single_line_v
 import 'package:stacked/stacked.dart';
 
 class SingleLineVU extends ViewModelBuilderWidget<SingleLineViewModel> {
-  SingleLineVU(this.questionnaire, this.controller, {Key? key}) : super(key: key);
+  const SingleLineVU(this.questionnaire, this.controller, {Key? key})
+      : super(key: key);
   final GetQuestionnaire questionnaire;
-  late StreamController<String> controller;
+  final StreamController<String> controller;
 
   @override
-  Widget builder(BuildContext context, SingleLineViewModel viewModel, Widget? child) {
+  Widget builder(
+      BuildContext context, SingleLineViewModel viewModel, Widget? child) {
     debugPrint('Build is being called');
     return Form(
       key: viewModel.formKey,
       child: TextFormField(
-        onChanged: (value){
+        onChanged: (value) {
           viewModel.onSaved();
           questionnaire.answer = value;
         },
-        initialValue: viewModel.questionnaire.answer ?? (viewModel.answer == null ? '' : viewModel.answer!.answer),
+        initialValue: viewModel.questionnaire.answer ??
+            (viewModel.answer == null ? '' : viewModel.answer!.answer),
         validator: viewModel.onValidate,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         maxLines: 1,
         focusNode: viewModel.focus,
         decoration: const InputDecoration(
           border: InputBorder.none,
-            hintText: 'write_your_answer_here',
-            hintStyle: TextStyle(
-                color: Color.fromARGB(255, 194, 194, 194),),),
+          hintText: 'write_your_answer_here',
+          hintStyle: TextStyle(
+            color: Color.fromARGB(255, 194, 194, 194),
+          ),
+        ),
       ),
     );
   }
