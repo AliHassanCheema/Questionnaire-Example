@@ -30,7 +30,7 @@ class SingleLineVU extends ViewModelBuilderWidget<SingleLineViewModel> {
         focusNode: viewModel.focus,
         decoration: const InputDecoration(
           border: InputBorder.none,
-          hintText: 'write_your_answer_here',
+          hintText: 'write your answer here...',
           hintStyle: TextStyle(
             color: Color.fromARGB(255, 194, 194, 194),
           ),

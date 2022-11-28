@@ -1,0 +1,4 @@
+#Fri Nov 25 17:17:35 PKT 2022
+base.0=/Users/chi/Desktop/CHI/Projects/PRACTICES/Questionnaire-Example/build/app/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+renamed.0=classes.dex
+path.0=classes.dex

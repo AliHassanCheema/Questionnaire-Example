@@ -35,7 +35,7 @@ class MultiLineViewModel extends BaseViewModel {
 
   String? onValidate(value) {
     if (value == null || value.isEmpty) {
-      return 'please enter some answer';
+      return 'Mandatory field*';
     }
     myAnswer = value;
     return null;

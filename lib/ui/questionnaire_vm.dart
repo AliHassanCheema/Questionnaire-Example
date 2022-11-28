@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-
 import '../models/get_questionnaire_model.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 class QuestionnaireViewModel extends BaseViewModel {
   List<Answers> answers = [];
@@ -12,31 +12,34 @@ class QuestionnaireViewModel extends BaseViewModel {
   final notificationController = StreamController<String>.broadcast();
 
   QuestionnaireViewModel() {
-    questions.add(GetQuestionnaire('ID', 'AP-ID', 'What is Your Problem?',
-        'single_line', null, null, null));
-    questions.add(GetQuestionnaire('ID1', 'AP-ID1', 'What is Your Problem?1',
-        'multi_line', null, null, null));
+    questions.add(GetQuestionnaire(
+        'ID', 'AP-ID', 'What happened?', 'single_line', null, null, null));
+    questions.add(GetQuestionnaire(
+        'ID1',
+        'AP-ID1',
+        "Please explain what's wrong with you?",
+        'multi_line',
+        null,
+        null,
+        null));
     questions.add(GetQuestionnaire(
         'ID2',
         'AP-ID2',
-        'What is Your Problem?2',
+        'Would you like to tell me its reason?',
         'single_choice',
         null,
         [Options('Yes', false), Options('No', false)],
         ['No']));
-    questions.add(GetQuestionnaire(
-        'ID3',
-        'AP-ID3',
-        'What did You eat?',
-        'multi_choice',
-        null,
-        [
-          Options('Daal Chawal', false),
-          Options('Savour Pulao', false),
-          Options('Lassi', false),
-          Options('Pizza', false)
-        ],
-        ['Daal Chawal', 'Pizza']));
+    questions.add(GetQuestionnaire('ID3', 'AP-ID3',
+        'Who creates problems for you?', 'multi_choice', null, [
+      Options('Boss', false),
+      Options('Job', false),
+      Options('Team Lead', false),
+      Options('Colleagues', false)
+    ], [
+      'Job',
+      'Boss'
+    ]));
   }
 
   onAddToList(Answers value) {
@@ -52,29 +55,30 @@ class QuestionnaireViewModel extends BaseViewModel {
     debugPrint('\n');
   }
 
-  addData() {
+  addData(BuildContext context) {
     int i = 0;
     for (var question in questions) {
       debugPrint(question.answer);
       debugPrint(question.selectedOption.toString());
-      if(question.answerType != 'single_line' && question.answerType != 'multi_line') {
+      if (question.answerType != 'single_line' &&
+          question.answerType != 'multi_line') {
         List<String>? option = question.options!
             .map((op) {
-          return op.option;
-        })
+              return op.option;
+            })
             .cast<String>()
             .toList();
 
-        List<String> sOptions = question.selectedOption!.map((e) => e.toString()).toList();
+        List<String> sOptions =
+            question.selectedOption!.map((e) => e.toString()).toList();
         answers.add(Answers(
             questionId: question.questionId,
             question: question.question,
             answerType: question.answerType,
             answer: question.answer,
             options: option,
-            selectedOption: sOptions ));
-      }
-      else{
+            selectedOption: sOptions));
+      } else {
         answers.add(Answers(
             questionId: question.questionId,
             question: question.question,
@@ -83,7 +87,6 @@ class QuestionnaireViewModel extends BaseViewModel {
             options: null,
             selectedOption: null));
       }
-
       debugPrint(answers[i].answer);
       debugPrint(answers[i].selectedOption.toString());
       i++;
@@ -99,4 +102,39 @@ class QuestionnaireViewModel extends BaseViewModel {
 //     return false;
 //   }
 // }
+  onSuccessDialog(
+      BuildContext context, double width, String title, String msg) {
+    showPlatformDialog(
+      context: context,
+      builder: (_) => PlatformAlertDialog(
+        material: (_, __) => MaterialAlertDialogData(
+          insetPadding: const EdgeInsets.all(10),
+        ),
+        title: Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child: Text(
+            title,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              color: Colors.blue,
+              fontSize: 28,
+            ),
+          ),
+        ),
+        content: Padding(
+          padding: const EdgeInsets.only(bottom: 12.0),
+          child: Builder(builder: (context) {
+            return SizedBox(
+              width: width,
+              child: Text(
+                msg,
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Colors.grey, fontSize: 16),
+              ),
+            );
+          }),
+        ),
+      ),
+    );
+  }
 }

@@ -87,13 +87,12 @@ class QuestionnaireVU extends ViewModelBuilderWidget<QuestionnaireViewModel> {
 
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(20,16, 20, 20),
+        padding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
         child: ListView.builder(
-          itemBuilder: (BuildContext context, int index) =>
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: questionBox(context, viewModel, viewModel.questions[index], index)
-              ),
+          itemBuilder: (BuildContext context, int index) => Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: questionBox(
+                  context, viewModel, viewModel.questions[index], index)),
           itemCount: viewModel.questions.length,
         ),
       ),
@@ -105,7 +104,7 @@ class QuestionnaireVU extends ViewModelBuilderWidget<QuestionnaireViewModel> {
               // viewModel.focus.requestFocus();
               viewModel.answers.clear();
               viewModel.notificationController.sink.add('GetData');
-              viewModel.addData();
+              viewModel.addData(context);
             },
             focusNode: viewModel.focus,
             child: const Text('Get Focus'),
@@ -116,10 +115,11 @@ class QuestionnaireVU extends ViewModelBuilderWidget<QuestionnaireViewModel> {
   }
 
   Widget questionBox(
-      BuildContext context,
-      QuestionnaireViewModel viewModel,
-      GetQuestionnaire questionnaire,
-      int index,) {
+    BuildContext context,
+    QuestionnaireViewModel viewModel,
+    GetQuestionnaire questionnaire,
+    int index,
+  ) {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: Container(
@@ -127,8 +127,7 @@ class QuestionnaireVU extends ViewModelBuilderWidget<QuestionnaireViewModel> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
-              color:const Color.fromARGB(255, 216, 216, 216),
-              width: 1.5),
+              color: const Color.fromARGB(255, 216, 216, 216), width: 1.5),
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(
@@ -150,7 +149,8 @@ class QuestionnaireVU extends ViewModelBuilderWidget<QuestionnaireViewModel> {
             childrenPadding: EdgeInsets.zero,
             iconColor: Colors.black,
             textColor: Colors.black,
-            initiallyExpanded: viewModel.questions[index].isExpanded,//index == 0 ? true : false,
+            initiallyExpanded: viewModel
+                .questions[index].isExpanded, //index == 0 ? true : false,
             title: Text(
               questionnaire.question!,
               maxLines: 4,
@@ -163,12 +163,15 @@ class QuestionnaireVU extends ViewModelBuilderWidget<QuestionnaireViewModel> {
                 color: Color.fromARGB(255, 194, 194, 194),
               ),
               questionnaire.answerType == 'single_line'
-                  ? SingleLineVU(questionnaire, viewModel.notificationController)
+                  ? SingleLineVU(
+                      questionnaire, viewModel.notificationController)
                   : questionnaire.answerType == 'multi_line'
-                  ? MultiLineVU(questionnaire, viewModel.notificationController)
-                  : questionnaire.answerType == 'multi_choice'
-                  ? MultiChoiceVU(questionnaire)//MultiChoiceQuestion( questionnaire)
-                  : SingleChoiceVU(questionnaire),
+                      ? MultiLineVU(
+                          questionnaire, viewModel.notificationController)
+                      : questionnaire.answerType == 'multi_choice'
+                          ? MultiChoiceVU(
+                              questionnaire) //MultiChoiceQuestion( questionnaire)
+                          : SingleChoiceVU(questionnaire),
             ],
           ),
         ),
@@ -176,11 +179,8 @@ class QuestionnaireVU extends ViewModelBuilderWidget<QuestionnaireViewModel> {
     );
   }
 
-
   @override
   QuestionnaireViewModel viewModelBuilder(BuildContext context) {
     return QuestionnaireViewModel();
   }
 }
-
-
