@@ -1,8 +1,6 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-
 import '../../../models/get_questionnaire_model.dart';
 
 class SingleLineViewModel extends BaseViewModel {
